@@ -1,0 +1,58 @@
+# PPSSPP Claude Code Plugin
+
+Claude Code plugin for [PPSSPP](https://github.com/OmbraRD/ppsspp) PSP emulator MCP integration.
+
+Provides MCP server configuration and reference skills for PPSSPP's built-in MCP server, enabling runtime debugging, memory inspection, CPU stepping, breakpoints, disassembly, inline assembly, symbol lookup, thread inspection, and screenshots -- 18 MCP tools for PSP reverse engineering and testing.
+
+## Installation
+
+### From marketplace
+
+Add the marketplace, then install the plugin:
+
+```shell
+/plugin marketplace add OmbraRD/ppsspp-claude-plugin
+/plugin install ppsspp@OmbraRD-ppsspp-claude-plugin
+```
+
+### From local directory
+
+Clone the repository and load it with `--plugin-dir`:
+
+```shell
+git clone https://github.com/OmbraRD/ppsspp-claude-plugin.git
+claude --plugin-dir ./ppsspp-claude-plugin
+```
+
+## Prerequisites
+
+- [PPSSPP](https://github.com/OmbraRD/ppsspp) with MCP server support (v1.20.1+)
+- MCP server enabled in PPSSPP settings (default port: 27077)
+
+## What's Included
+
+### MCP Server Configuration (`.mcp.json`)
+
+Connects Claude Code to PPSSPP's built-in MCP server via Streamable HTTP on `localhost:27077`.
+
+### Skills
+
+| Skill | Description |
+|-------|-------------|
+| `ppsspp-setup` | MCP server setup, configuration, and troubleshooting |
+| `ppsspp-cpu-debug` | CPU debugging: registers, disassembly, assembly, breakpoints, stepping, memory read/write/search, symbol lookup |
+| `ppsspp-system-io` | System control: emulator status, game info, threads, screenshots |
+| `ppsspp-workflows` | Reverse engineering workflows: find RAM writers, cheat search, memory diff, ASM patch verification, variable monitoring |
+
+## PSP Hardware Quick Reference
+
+- **CPU:** Allegrex (MIPS32 4K-based), 1-333 MHz (default 222 MHz), little-endian
+- **Coprocessors:** COP0 (system control), COP1 (FPU), COP2 (VFPU, 3.2 GFLOPS)
+- **User RAM:** 0x08800000 - 0x0A000000 (24 MB)
+- **VRAM:** 0x04000000 - 0x04200000 (2 MB)
+- **Scratchpad:** 0x00010000 (16 KB)
+- **Cache:** 16 KB I-cache + 16 KB D-cache per core
+
+## Upstream
+
+PPSSPP emulator: <https://github.com/hrydgard/ppsspp>

@@ -1,0 +1,8 @@
+{
+  "name": "ppsspp",
+  "description": "PPSSPP PSP emulator MCP integration for Claude Code: runtime debugging, memory inspection, CPU stepping, breakpoints, disassembly, assembly, symbol lookup, thread inspection, and screenshots. 18 MCP tools for PSP reverse engineering and testing.",
+  "version": "1.0.0",
+  "author": { "name": "Ombra", "email": "ombra@sadnescity.it" },
+  "homepage": "https://github.com/OmbraRD/ppsspp",
+  "license": "GPL-2.0"
+}

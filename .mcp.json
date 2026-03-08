@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ppsspp": {
+      "type": "http",
+      "url": "http://localhost:27077/mcp"
+    }
+  }
+}
