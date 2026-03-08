@@ -26,28 +26,56 @@
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `disassemble(address, count?)` | count=16 (max 256) | Disassemble MIPS instructions at a given address |
+| `disassemble(address, count?, stop?)` | count=16 (max 256), stop="return"\|"none" | Disassemble MIPS instructions at a given address |
 | `assemble(address, instruction)` | -- | Assemble a single MIPS instruction and write it to memory |
+
+**Parameters:**
+- `address` -- hex with `0x` prefix (e.g. `"0x08900000"`) or decimal.
+- `stop` -- `"return"` (default): stop at `jr ra`; `"none"`: disassemble exactly `count` instructions.
 
 **Tips:**
 - Use `disassemble` with the PC from `read_registers()` to see code around the current instruction.
-- `assemble` writes the encoded instruction directly to memory at the given address. Example: `assemble(address=0x08900000, instruction="addiu a0, zero, 1")`.
+- `assemble` writes the encoded instruction directly to memory at the given address. Example: `assemble(address="0x08900000", instruction="addiu a0, zero, 1")`.
 - The Allegrex supports standard MIPS32 plus: ext, ins, wsbw, seb, seh, rotr, clz, clo.
 
 ## Breakpoints (3 tools)
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `set_breakpoint(address, enabled?)` | enabled=true | Set a CPU breakpoint at the given address |
+| `set_breakpoint(address, enabled?, condition?)` | enabled=true | Set a CPU execution breakpoint at the given address |
 | `remove_breakpoint(address)` | -- | Remove a CPU breakpoint |
-| `list_breakpoints()` | -- | List all CPU breakpoints |
+| `list_breakpoints()` | -- | List all CPU breakpoints and memory watchpoints |
+
+**Parameters:**
+- `address` -- hex with `0x` prefix or decimal.
+- `condition` -- expression that must be true for the breakpoint to trigger (e.g. `"a0 == 1"` or `"[sp+0x10] != 0"`).
 
 **Notes:**
 - When a breakpoint hits, execution pauses automatically.
 - Use `read_registers()` to inspect state, then `resume()` or `step_into()` to proceed.
 - Breakpoints can be created in disabled state with `enabled=false` and toggled later.
-- `list_breakpoints` returns each breakpoint's address, enabled status, and symbol name (if one exists at that address).
-- These are execute-only breakpoints (no read/write watchpoints).
+- `list_breakpoints` returns all CPU breakpoints and memory watchpoints with address, enabled status, and symbol name (if available).
+
+## Memory Watchpoints (2 tools)
+
+| Tool | Parameters | Description |
+|------|-----------|-------------|
+| `set_memcheck(address, size, read?, write?, change?, enabled?, condition?)` | write=true | Set a memory watchpoint on an address range |
+| `remove_memcheck(address, size)` | -- | Remove a memory watchpoint |
+
+**Parameters:**
+- `address` -- start address of memory range. Hex with `0x` prefix or decimal.
+- `size` -- size of memory range in bytes.
+- `read` -- trigger on memory reads (default false).
+- `write` -- trigger on memory writes (default true).
+- `change` -- trigger only on writes that change the value (default false).
+- `condition` -- expression that must be true for the watchpoint to trigger.
+
+**Notes:**
+- Memory watchpoints (memchecks) break when the CPU reads from or writes to an address range.
+- Use `list_breakpoints()` to see all active watchpoints alongside CPU breakpoints.
+- Combine with `read_registers()` and `disassemble()` to identify the code responsible for a memory access.
+- Use `change=true` to avoid breaking on redundant writes that store the same value.
 
 ## Symbol Lookup (1 tool)
 
@@ -66,10 +94,11 @@
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `read_memory(address, size)` | max size=65536 | Read bytes from PSP memory. Returns hex string + ASCII preview (first 64 bytes). Works with RAM (0x08800000), VRAM (0x04000000), scratchpad (0x00010000) |
+| `read_memory(address, size)` | max size=65536 | Read bytes from PSP memory. Returns hex string. Works with RAM (0x08800000), VRAM (0x04000000), scratchpad (0x00010000) |
 | `write_memory(address, hex)` | -- | Write bytes to PSP memory. Hex string (e.g. "0102AABB"). Hex must have even length |
 
 **Address conventions:**
+- All addresses accept hex with `0x` prefix (e.g. `"0x08800000"`) or decimal.
 - User RAM: 0x08800000 - 0x0A000000 (24 MB)
 - VRAM: 0x04000000 - 0x04200000 (2 MB)
 - Scratchpad: 0x00010000 (16 KB)
@@ -78,11 +107,15 @@
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
-| `search_memory(hex, start?, end?, max_results?)` | start=0x08800000, end=0x0A000000, max_results=16 (max 256) | Search PSP memory for a byte pattern |
+| `search_memory(hex, region?, start?, end?, max_results?)` | region="ram", max_results=16 (max 256) | Search PSP memory for a byte pattern |
+
+**Parameters:**
+- `hex` -- hex string pattern to search for (even length).
+- `region` -- `"ram"` (default, user RAM), `"vram"`, `"scratchpad"`, or `"kernel"`. Sets default start/end bounds.
+- `start` / `end` -- address overrides. Hex with `0x` prefix or decimal.
+- `max_results` -- maximum results (default 16, max 256).
 
 **Tips:**
-- Default search range is all user RAM.
-- `max_results` defaults to 16, capped at 256.
+- Use `region` to quickly select a memory range instead of specifying start/end manually.
 - Use hex byte patterns, e.g. `"64000000"` to search for the 32-bit little-endian value 100 (0x64).
-- Hex string must have even length.
 - Returns an array of matching addresses and a count.

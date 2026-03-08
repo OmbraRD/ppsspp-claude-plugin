@@ -23,6 +23,18 @@
 - Useful for understanding which thread is executing, finding thread entry points, and debugging multi-threaded games.
 - The PSP kernel is multithreaded -- games typically have separate threads for main logic, rendering, audio, and I/O.
 
+## HLE Modules (1 tool)
+
+| Tool | Parameters | Description |
+|------|-----------|-------------|
+| `list_hle_modules()` | -- | List HLE modules and functions imported by the running game |
+
+**Notes:**
+- Returns modules with their imports, including function name, NID, and stub address for each imported function.
+- Useful for understanding which PSP OS APIs the game uses.
+- Combine with `lookup_symbol` to cross-reference HLE function stubs with addresses found in disassembly.
+- HLE imports are stored in the symbol map with a `zz_` prefix (e.g. `zz_sceDisplaySetFrameBuf`), but `lookup_symbol` handles this automatically.
+
 ## Screenshots (1 tool)
 
 | Tool | Parameters | Description |
