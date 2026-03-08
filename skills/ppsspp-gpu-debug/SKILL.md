@@ -24,12 +24,14 @@
 - Stops early at END command.
 - Use `ge_list_display_lists` to find the current display list PC, then `ge_disassemble` to inspect its commands.
 
-## GPU State (2 tools)
+## GPU State (4 tools)
 
 | Tool | Parameters | Description |
 |------|-----------|-------------|
 | `get_gpu_state(category?)` | category="all" | Get the current GE rendering state as human-readable strings |
 | `get_gpu_stats()` | -- | Get GPU rendering statistics for the current/last frame |
+| `get_current_vertices()` | -- | Get transformed vertices for the current draw call. Must be paused at a GE draw command |
+| `get_gpu_matrices(name?)` | name="all" | Get GPU transformation matrices |
 
 **Categories for `get_gpu_state`:**
 - `"flags"` -- rendering flags (alpha test, depth test, blend, etc.)
@@ -37,6 +39,18 @@
 - `"texture"` -- texture state (address, format, filtering, wrapping)
 - `"settings"` -- other settings (scissor, viewport, fog, etc.)
 - `"all"` (default) -- all categories
+
+**Matrix names for `get_gpu_matrices`:**
+- `"world"` -- world matrix (4x3)
+- `"view"` -- view matrix (4x3)
+- `"projection"` -- projection matrix (4x4)
+- `"texgen"` -- texture generation matrix (4x3)
+- `"bone"` -- all 8 bone matrices (each 4x3)
+- `"all"` (default) -- all matrices
+
+**Notes on `get_current_vertices`:**
+- Emulator must be paused at a GE draw command (use `set_ge_break_on` with `"draw"` or `"prim"` event).
+- Returns the transformed vertex data for the current primitive being drawn.
 
 ## Textures & Buffers (4 tools)
 

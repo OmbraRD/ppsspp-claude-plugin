@@ -2,7 +2,7 @@
 
 Claude Code plugin for [PPSSPP](https://github.com/OmbraRD/ppsspp) PSP emulator MCP integration.
 
-Provides MCP server configuration and reference skills for PPSSPP's built-in MCP server, enabling CPU debugging, GPU/GE inspection, memory watchpoints, framebuffer dumps, texture/CLUT/depth/stencil inspection, GE display list disassembly, GE breakpoints, HLE module listing, and more -- 34 MCP tools for PSP reverse engineering and testing.
+Provides MCP server configuration and reference skills for PPSSPP's built-in MCP server, enabling CPU debugging, GPU/GE inspection, memory watchpoints, framebuffer dumps, texture/CLUT/depth/stencil inspection, vertex/matrix inspection, GE display list disassembly, GE breakpoints, HLE module listing, and more -- 36 MCP tools for PSP reverse engineering and testing.
 
 ## Installation
 
@@ -42,7 +42,7 @@ Connects Claude Code to PPSSPP's built-in MCP server via Streamable HTTP on `loc
 |-------|-------------|
 | `ppsspp-setup` | MCP server setup, configuration, and troubleshooting |
 | `ppsspp-cpu-debug` | CPU debugging: registers, disassembly, assembly, breakpoints, memory watchpoints, stepping, memory read/write/search, symbol lookup |
-| `ppsspp-gpu-debug` | GPU debugging: framebuffers, GE display lists, GPU state, textures, CLUT, depth/stencil buffers, GE breakpoints, HLE modules, GPU stats |
+| `ppsspp-gpu-debug` | GPU debugging: framebuffers, GE display lists, GPU state, textures, CLUT, depth/stencil buffers, vertices, matrices, GE breakpoints, HLE modules, GPU stats |
 | `ppsspp-system-io` | System control: emulator status, game info, threads, HLE modules, screenshots |
 | `ppsspp-workflows` | Reverse engineering workflows: find RAM writers, cheat search, memory diff, ASM patch verification, GPU display list analysis, GE event debugging |
 

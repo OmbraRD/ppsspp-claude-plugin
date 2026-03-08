@@ -118,10 +118,11 @@ Use this to understand how a game renders its graphics.
 2. `ge_list_display_lists()` -- see active display lists with their PCs
 3. `ge_disassemble(address="0x...")` -- inspect the display list commands
 4. `get_gpu_state()` -- view the current GPU rendering state (texture, blending, etc.)
-5. `get_current_texture()` -- dump the currently bound texture
-6. `get_current_clut()` -- dump the CLUT if using indexed textures
-7. `list_framebuffers()` -- see all active framebuffers
-8. `get_framebuffer(address="0x...")` -- dump a specific framebuffer
+5. `get_gpu_matrices()` -- inspect world/view/projection matrices
+6. `get_current_texture()` -- dump the currently bound texture
+7. `get_current_clut()` -- dump the CLUT if using indexed textures
+8. `list_framebuffers()` -- see all active framebuffers
+9. `get_framebuffer(address="0x...")` -- dump a specific framebuffer
 
 **Tip:** Use `get_gpu_state(category="texture")` to focus on texture state only. The texture address in GPU state corresponds to VRAM addresses you can cross-reference with `list_framebuffers`.
 
@@ -134,6 +135,8 @@ Use this to find the draw call responsible for rendering a specific element.
 3. When it breaks, inspect the state:
    - `get_gpu_state(category="texture")` -- what texture is bound?
    - `get_current_texture()` -- visualize the texture
+   - `get_current_vertices()` -- inspect the transformed vertex data for this draw call
+   - `get_gpu_matrices()` -- check transformation matrices
    - `ge_disassemble(address="0x...")` -- see the display list commands at this point
 4. If this isn't the right draw call, `resume()` and `set_ge_break_on(event="draw")` again
 5. Or use `set_ge_break_on(event="draw", count=N)` to skip N-1 draw calls

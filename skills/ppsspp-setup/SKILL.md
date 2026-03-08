@@ -15,7 +15,7 @@ The server operates via Streamable HTTP at the endpoint `POST http://localhost:2
 ## Server Information
 
 - **Server name:** ppsspp
-- **Capabilities:** tools (34 tools)
+- **Capabilities:** tools (36 tools)
 - **Instructions from server:** "PPSSPP PSP Emulator MCP server. Provides tools for inspecting and controlling the emulated PSP. Memory addresses are in PSP address space (user RAM starts at 0x08800000)."
 
 ## Address Format
@@ -63,10 +63,10 @@ Hex format with `0x` prefix is recommended for readability.
 | Screenshots | take_screenshot | 1 |
 | Framebuffers | list_framebuffers, get_framebuffer | 2 |
 | GE display lists | ge_list_display_lists, ge_disassemble | 2 |
-| GPU state | get_gpu_state, get_gpu_stats | 2 |
+| GPU state | get_gpu_state, get_gpu_stats, get_current_vertices, get_gpu_matrices | 4 |
 | Textures & buffers | get_current_texture, get_current_clut, get_depth_buffer, get_stencil_buffer | 4 |
 | GE breakpoints | set_ge_breakpoint, remove_ge_breakpoint, set_ge_break_on | 3 |
-| **Total** | | **34** |
+| **Total** | | **36** |
 
 ## Common Issues
 
