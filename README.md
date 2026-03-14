@@ -1,6 +1,6 @@
 # PPSSPP Claude Code Plugin
 
-Claude Code plugin for [PPSSPP](https://github.com/OmbraRD/ppsspp) PSP emulator MCP integration.
+Claude Code plugin for [PPSSPP](https://github.com/sadnescity/ppsspp) PSP emulator MCP integration.
 
 Provides MCP server configuration and reference skills for PPSSPP's built-in MCP server, enabling CPU debugging, GPU/GE inspection, memory watchpoints, framebuffer dumps, texture/CLUT/depth/stencil inspection, vertex/matrix inspection, GE display list disassembly, GE breakpoints, HLE module listing, and more -- 36 MCP tools for PSP reverse engineering and testing.
 
@@ -11,8 +11,8 @@ Provides MCP server configuration and reference skills for PPSSPP's built-in MCP
 Add the marketplace, then install the plugin:
 
 ```shell
-/plugin marketplace add OmbraRD/ppsspp-claude-plugin
-/plugin install ppsspp@OmbraRD-ppsspp-claude-plugin
+/plugin marketplace add sadnescity/claude-plugins
+/plugin install ppsspp@sadnescity-claude-plugins
 ```
 
 ### From local directory
@@ -20,13 +20,13 @@ Add the marketplace, then install the plugin:
 Clone the repository and load it with `--plugin-dir`:
 
 ```shell
-git clone https://github.com/OmbraRD/ppsspp-claude-plugin.git
+git clone https://github.com/sadnescity/ppsspp-claude-plugin.git
 claude --plugin-dir ./ppsspp-claude-plugin
 ```
 
 ## Prerequisites
 
-- [PPSSPP](https://github.com/OmbraRD/ppsspp) with MCP server support (v1.20.1+)
+- [PPSSPP](https://github.com/sadnescity/ppsspp) with MCP server support (v1.20.1+)
 - MCP server enabled in PPSSPP settings (default port: 27077)
 - **CPU core set to Interpreter** (JIT/IR JIT not supported with MCP)
 
